@@ -6,28 +6,12 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "src/public/templates/**"
+          "src/public/**"
         ]
       }
-    },
-    {
-      "src": "src/public/css/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/public/js/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/css/(.*)",
-      "dest": "src/public/css/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "src/public/js/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "src/app/app.js"
