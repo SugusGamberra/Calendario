@@ -1,3 +1,33 @@
+/* Fondo dinámico según estación y cumpleaños */
+(function() {
+    var body = document.body;
+    var today = new Date();
+    var month = today.getMonth() + 1; // 1-12
+    var day = today.getDate();
+    var bg = '';
+    // Cumpleaños: 28 de octubre
+    if (month === 10 && day === 28) {
+        bg = '/img/cinnamoroll-birthday.jpg';
+    } else {
+        // Estaciones en España
+        if ((month === 3 && day >= 20) || (month > 3 && month < 6) || (month === 6 && day < 21)) {
+            bg = '/img/cinnamoroll-spring.png'; // Primavera: 20 marzo - 20 junio
+        } else if ((month === 6 && day >= 21) || (month > 6 && month < 9) || (month === 9 && day < 23)) {
+            bg = '/img/cinnamoroll-summer.jpeg'; // Verano: 21 junio - 22 septiembre
+        } else if ((month === 9 && day >= 23) || (month > 9 && month < 12) || (month === 12 && day < 21)) {
+            bg = '/img/cinnamoroll-autumn.png'; // Otoño: 23 septiembre - 21 diciembre
+        } else {
+            bg = '/img/cinnamoroll-winter.png'; // Invierno: 21 diciembre - 19 marzo
+        }
+    }
+    if (bg) {
+        document.documentElement.style.backgroundImage = 'url("' + bg + '")';
+        document.documentElement.style.backgroundSize = 'cover';
+        document.documentElement.style.backgroundPosition = 'center';
+        document.documentElement.style.backgroundAttachment = 'fixed';
+    }
+})();
+
 /* DOM: contenedor del calendario */
 var calendarEl = document.getElementById('calendario');
 
