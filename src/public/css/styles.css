@@ -1,0 +1,452 @@
+/* Global: reset y tipografías */
+/* Comentarios cortos en español para facilitar el handoff */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Fondo de la página y restricción de ancho */
+html {
+    color: #fff;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-image: url("https://wallpapers-clan.com/wp-content/uploads/2025/08/sanrio-cinnamoroll-room-at-night-desktop-wallpaper-cover.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body {
+    min-height: 0; 
+    padding: 0;
+    width: auto;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+}
+
+/* Contenedor del calendario: efecto cristal (liquid glass) */
+#calendario-wrapper {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    overflow: hidden;
+}
+
+/* FullCalendar: reglas globales y overrides */
+.fc {
+    color: #fff;
+    background-color: transparent !important;
+}
+
+.fc .fc-toolbar-title {
+    padding: 0 20px !important;
+    font-size: 1.5em !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    width: auto !important;
+}
+
+.fc .fc-col-header-cell-cushion,
+.fc .fc-timegrid-slot-label-cushion {
+    color: #fff !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    padding: 8px 4px;
+    font-weight: 600;
+}
+
+.fc .fc-button {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    border: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    text-transform: capitalize;
+    font-weight: 600;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+.fc .fc-button:hover {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+.fc .fc-button.fc-button-active {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.fc .fc-today-button {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+}
+
+.fc .fc-viewSelect-button {
+    min-width: 110px !important;
+    text-align: center !important;
+}
+
+/* View switcher group styles */
+.fc .fc-button-group {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    padding: 2px !important;
+    gap: 2px !important;
+}
+
+.fc .fc-button-group .fc-button {
+    border-radius: 6px !important;
+}
+
+.fc .fc-view,
+.fc .fc-scrollgrid,
+.fc .fc-timegrid-body,
+.fc .fc-timegrid-slots,
+.fc .fc-col-header,
+.fc .fc-daygrid-day {
+    background: transparent !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.fc .fc-scrollgrid {
+    border-radius: 10px !important;
+    /* permitir que los elementos sticky funcionen correctamente al hacer scroll */
+    overflow: visible !important;
+}
+
+.fc .fc-scrollgrid-section-header table {
+    border-radius: 10px 10px 0 0 !important;
+    /* evitar ocultar contenido sticky dentro de la cabecera */
+    overflow: visible !important;
+}
+
+.fc .fc-timegrid-body {
+    border-radius: 0 0 10px 10px !important;
+    /* permitir scroll interno sin recortar elementos sticky */
+    overflow: visible !important;
+}
+
+/* Forzar que las cabeceras de columna queden por encima y tengan fondo sólido suave */
+.fc .fc-col-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: rgba(0,0,0,0.12) !important;
+}
+
+.fc .fc-col-header-cell {
+    z-index: 6;
+}
+
+.fc .fc-timegrid-slot {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.fc .fc-timegrid-slot.fc-timegrid-slot-lane:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.fc .fc-event {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 6px;
+    cursor: pointer;
+    /* Transiciones suaves para hover/transform */
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    will-change: transform, box-shadow;
+}
+
+.fc .fc-event-main {
+    color: #fff !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    padding: 4px 6px;
+    font-weight: 600;
+}
+
+.fc .fc-event-time {
+    font-weight: 400;
+}
+
+/* Efecto hover/focus para eventos: levantar, sombra y quitar borde visualmente */
+.fc .fc-event:hover,
+.fc .fc-event:focus,
+.fc .fc-daygrid-event:hover,
+.fc .fc-daygrid-event:focus,
+.gcal-event:hover,
+.gcal-event:focus {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    border-color: rgba(255,255,255,0.85) !important;
+    background-color: rgba(255,255,255,0.36) !important;
+}
+
+/* Accesibilidad: foco visible para navegación por teclado */
+.fc .fc-event:focus-visible,
+.fc .fc-daygrid-event:focus-visible,
+.gcal-event:focus-visible {
+    outline: 2px solid rgba(255,255,255,0.18);
+    outline-offset: 3px;
+}
+
+.fc .fc-scroller {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.fc .fc-scroller::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
+}
+
+/* Modal de evento: backdrop y panel (estética liquid glass) */
+.event-modal__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    transition: opacity 180ms ease-in-out;
+    pointer-events: none;
+}
+
+/* Contenedor del modal y su estado (oculto/visible) */
+.event-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.event-modal[aria-hidden="false"] .event-modal__backdrop {
+    opacity: 1;
+}
+
+.event-modal__panel {
+    width: 420px;
+    max-width: calc(100% - 40px);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 18px 18px 16px 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    transform: translateY(8px) scale(0.98);
+    transition: transform 160ms ease, opacity 160ms ease;
+    opacity: 0;
+}
+
+.event-modal[aria-hidden="false"] .event-modal__panel {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.event-modal__close {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.event-modal__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.event-modal__close:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.event-modal__close:active {
+    transform: scale(0.95);
+}
+
+.event-modal__title {
+    margin-bottom: 6px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.event-modal__time {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.event-modal__description {
+    color: rgba(255,255,255,0.92);
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+/* Vista responsiva para el modal */
+@media (max-width: 480px) {
+    .event-modal__panel { width: 94%; padding: 14px; }
+}
+
+.fc .fc-daygrid-event .fc-event-title,
+.fc .fc-daygrid-event .fc-event-time {
+    color: #fff !important;
+}
+
+/* Lista (list view): apariencia de filas y cabeceras */
+.fc .fc-list .fc-list-item,
+.fc .fc-list .fc-list-event {
+    /* menos opaco para integrarse con el fondo cristal */
+    background: rgba(255,255,255,0.03) !important;
+    border-radius: 12px !important;
+    margin-bottom: 10px !important;
+    overflow: hidden !important;
+}
+
+.fc .fc-list .fc-list-item td,
+.fc .fc-list .fc-list-event td,
+.fc .fc-list .fc-list-item .fc-list-item-main,
+.fc .fc-list .fc-list-event .fc-list-event-main {
+    padding: 10px 12px !important;
+}
+
+.fc .fc-list .fc-list-heading,
+.fc .fc-list .fc-list-heading td,
+.fc .fc-list thead tr {
+    /* cabecera menos llamativa y texto claro */
+    background: rgba(255,255,255,0.08) !important;
+    color: rgba(255,255,255,0.95) !important;
+    border-radius: 10px !important;
+    padding: 8px 10px !important;
+    margin-bottom: 6px !important;
+}
+
+.fc .fc-list [data-date],
+.fc .fc-list .fc-list-heading-cushion {
+    /* chip de fecha menos brillante */
+    background: rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+}
+
+.fc .fc-list .fc-list-table {
+    /* asegurar que la tabla no pinte fondos blancos por defecto */
+    background: transparent !important;
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important;
+}
+
+.fc .fc-list .fc-list-table tr,
+.fc .fc-list .fc-list-table td,
+.fc .fc-list .fc-list-table th {
+    background: transparent !important;
+    border: none !important;
+}
+
+.fc .fc-daygrid-event .fc-event-title {
+    white-space: normal !important;
+}
+
+/* Footer: avatar y enlace a GitHub (centrado) */
+#site-footer.footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 14px 0 6px 0;
+}
+
+.footer__inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.04);
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.06);
+    /* constrain to calendar width and align with its inner padding */
+    max-width: 1200px;
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.footer__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.footer__github {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.footer__github:hover {
+    text-decoration: underline;
+}
+
+/* Reglas de alta especificidad para asegurar que la lista no muestre paneles blancos
+   Fuerzan transparencias y radios incluso si FullCalendar añade estilos inline */
+.fc .fc-list .fc-list-item-main,
+.fc .fc-list .fc-list-event-main,
+.fc .fc-list .fc-list-item,
+.fc .fc-list .fc-list-event,
+.fc .fc-list .fc-list-table td,
+.fc .fc-list .fc-list-table tr {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.fc .fc-list .fc-list-item,
+.fc .fc-list .fc-list-event {
+    border-radius: 12px !important;
+    padding: 6px 8px !important;
+}
+
+.fc .fc-list .fc-list-heading,
+.fc .fc-list .fc-list-heading td,
+.fc .fc-list thead tr {
+    background: rgba(255,255,255,0.06) !important;
+    color: #fff !important;
+}
+
+/* Si FullCalendar inserta estilos inline o usa otros elementos, esto los neutraliza */
+.fc [class*="fc-list"] * {
+    background: transparent !important;
+}
