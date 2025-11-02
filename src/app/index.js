@@ -28,6 +28,5 @@ app.use(express.static(publicPath));
 app.use(morgan("dev"));
 app.use("/", router);
 
-app.listen(app.get("port"), () => {
-    console.log(`Servidor corriendo en http://localhost:${app.get("port")}`);
-});
+// Exportar la app para que el servidor principal (src/server.js) la inicie.
+module.exports = app;
