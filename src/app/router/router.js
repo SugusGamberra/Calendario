@@ -1,5 +1,3 @@
-// Archivo: src/app/router/router.js
-// Define rutas de la aplicación (router principal)
 const router = require("express").Router();
 
 // Ruta raíz: renderiza la vista 'index' y pasa claves del calendario

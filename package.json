@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "node src/server.js",
-  "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "lint": "eslint . --ext .js"
   },
   "keywords": [],
@@ -19,7 +19,9 @@
     "pug": "^3.0.3"
   },
   "devDependencies": {
+    "eslint": "^8.50.0",
     "nodemon": "^3.1.10",
-    "eslint": "^8.50.0"
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^39.0.1"
   }
 }

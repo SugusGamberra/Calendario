@@ -1,6 +1,5 @@
-/* Fondo dinámico según estación y cumpleaños */
+// Fondo dinámico según estación y cumpleaños
 (function() {
-    var body = document.body;
     var today = new Date();
     var month = today.getMonth() + 1; // 1-12
     var day = today.getDate();
@@ -28,23 +27,27 @@
     }
 })();
 
-/* DOM: contenedor del calendario */
 var calendarEl = document.getElementById('calendario');
-
-/* Configuración inyectada desde Pug: apiKey y calendarId (defensas si faltan) */
 var cfg = (typeof window !== 'undefined' && window.calendarConfig) ? window.calendarConfig : { apiKey: '', calendarId: '' };
-
-/* Inicialización de FullCalendar */
 var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'timeGridWeek',
     locale: 'es',
     allDaySlot: false,
-    
+    nowIndicator: true,
     headerToolbar: {
         left: 'today',
         center: 'prev,title,next',
         right: 'timeGridWeek,dayGridMonth,listWeek'
     },
+
+    slotLabelFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    },
+
+    slotMinTime: '09:00:00',
+    slotMaxTiem: '22:00:00',
     
     views: {
         timeGridWeek: {
@@ -61,8 +64,6 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     },
 
     googleCalendarApiKey: cfg.apiKey || '',
-
-    /* Handler: fallo al cargar eventos desde Google Calendar */
     eventSourceFailure: function() {
         if (calendarEl) {
             var noticeId = 'gcal-error-notice';
@@ -77,14 +78,10 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
             }
         }
     },
-
-    /* Handler: click en evento (abrir modal) */
     eventClick: function(info) {
         if (info.jsEvent) info.jsEvent.preventDefault();
         showEventModal(info.event);
     },
-
-    /* Fuentes de eventos: Google Calendar (si calendarId presente) */
     eventSources: [
         {
             googleCalendarId: cfg.calendarId || '',
@@ -95,7 +92,6 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 
 calendar.render();
 
-/* Elementos del modal en el DOM (si existen) */
 var modalRoot = document.getElementById('event-modal');
 var modalTitle = modalRoot && modalRoot.querySelector('.event-modal__title');
 var modalTime = modalRoot && modalRoot.querySelector('.event-modal__time');
@@ -113,7 +109,6 @@ var timeFormatter = new Intl.DateTimeFormat('es', {
     minute: '2-digit'
 });
 
-/* Mostrar modal con datos del evento (formato en español) */
 function showEventModal(event) {
     if (!modalRoot) return;
     var title = event.title || 'Sin título';
@@ -144,7 +139,6 @@ function showEventModal(event) {
     document.addEventListener('keydown', onKeyDownModal);
 }
 
-/* Ocultar modal y limpiar listeners */
 function hideEventModal() {
     if (!modalRoot) return;
     modalRoot.setAttribute('aria-hidden', 'true');
